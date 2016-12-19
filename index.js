@@ -1,4 +1,3 @@
-
 // Connection to the database
 const knex = require('knex')({
   dialect: 'mssql',
@@ -15,6 +14,7 @@ const knex = require('knex')({
   debug: true
 });
 
+
 //NOTE  reports
 
 function missingIdCardsOrg () {
@@ -29,7 +29,8 @@ function missingIdCardsOrg () {
   }).catch(function(err) {
     console.log(err);
   })
-}
+};
+
 function missingIdCardsInd () {
   knex.select(knex.raw("concat(customerperson.firstName, ' ', customerperson.lastname) as 'Customer Name', username as 'File manager', relationshipStartDate as 'Relationship Start Date'"))
   .from("customerperson")
@@ -42,7 +43,7 @@ function missingIdCardsInd () {
   }).catch(function(err) {
     console.log(err);
   })
-}
+};
 
 function missingAddressesInd () {
   knex.select(knex.raw("concat(customerperson.firstName, ' ', customerperson.lastname) as 'Customer Name', username as 'File manager'"))
@@ -108,7 +109,7 @@ function missingDocumentsInd() {
   }).catch(function(err) {
     console.log(err);
   })
-}
+};
 
 function missingDocumentsInd() {
   knex.select(knex.raw("concat(customerperson.firstName, ' ', customerperson.lastName) as 'Customer Name', documenttype.name as 'Missing Document'"))
@@ -121,7 +122,7 @@ function missingDocumentsInd() {
   }).catch(function(err) {
     console.log(err);
   })
-}
+};
 
 function missingDocumentsOrg() {
   knex.select(knex.raw("tradeName 'Company Name', documenttype.name as 'Missing Document'"))
@@ -134,7 +135,7 @@ function missingDocumentsOrg() {
   }).catch(function(err) {
     console.log(err);
   })
-}
+};
 
 //missingIdCardsOrg ();
 //missingIdCardsInd();
@@ -143,4 +144,4 @@ function missingDocumentsOrg() {
 //screeningRiskInd();
 //screeningRiskOrg();
 //missingDocumentsInd();
-missingDocumentsOrg();
+//missingDocumentsOrg();
