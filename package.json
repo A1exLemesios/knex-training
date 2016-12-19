@@ -1,0 +1,23 @@
+{
+  "name": "knex-training",
+  "version": "1.0.0",
+  "description": "A pet project for knex training ",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/A1exLemesios/knex-training.git"
+  },
+  "author": "Alexandros Lemesios",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/A1exLemesios/knex-training/issues"
+  },
+  "homepage": "https://github.com/A1exLemesios/knex-training#readme",
+  "dependencies": {
+    "knex": "^0.12.6",
+    "mssql": "^3.3.0"
+  }
+}
