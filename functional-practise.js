@@ -32,8 +32,7 @@ const dogs = [
 ];
 
 let names = dogs.map( (dog) => {
-  let i = 0;
-  i++;
+
   dog.age = i;
   return dog;
 });

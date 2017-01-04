@@ -27,17 +27,19 @@ const data =
   }
 ]
 
-const headerFunction = (report) => {
+const headerFunction = (report, headers) => {
   report.print("Individual missing addresses report", {fontSize: 22, bold: true, x:80, underline:true, align: "center"});
   report.newLine(2);
-  report.band(
-    [
-      {data: "Customer name", width:180, fontSize: 16, bold: true, textColor: "#173059"},
-      {data: "File manager", width:180, bold: true, fontSize: 16, textColor: "#173059"},
-      {data: "Relationship started", width:180, fontSize: 16, bold: true, textColor: "#173059"},
-      {data: "Customer Risk", width:180, fontSize: 16, bold: true, textColor: "#173059"}
-    ]
-  );
+  headers = headers.map((header) => {
+    return {
+      data: header,
+      width: 120,
+      fontSize: 12,
+      bold: true,
+      textColor: "#173059"
+    }
+  })
+  report.band(headers, {gutter: 4});
 };
 
 const footerFunction = (report) => {
@@ -46,24 +48,27 @@ const footerFunction = (report) => {
   report.print("Printed: "+(new Date().toLocaleDateString()), {y: report.maxY()-14, align: "left"});
 };
 
-const testDetail = ( report, data ) => {
-  report.band(
-    [
-      {data: data.customerName, width:180, fontSize: 12, textColor: "#173059", align:"left"},
-      {data: data.fileManager, width:180, fontSize: 12, textColor: "#173059", align:"left"},
-      {data: data.relationshipDate, width:180, fontSize: 12, textColor: "#173059", align:"left"},
-      {data: data.customerRisk, width:100, fontSize: 12, textColor: "#173059", align:"center"}
-    ]
-  );
+const testDetail = (report, datum) => {
+  const keys = Object.keys(datum);
+  datum = keys.map((key) => {
+    return {
+      data: datum[key],
+      width:120,
+      fontSize: 10,
+      textColor: "#173059",
+      align:"left"
+    }
+  });
+  report.band(datum, { gutter: 4 });
 };
 
-
-rimraf.sync("missingAddressesInd.pdf");
-
 const print = function(name, headers, data, options) {
+
   const rpt = new report(name, options)
    .data(data)
-   .pageHeader(headerFunction)
+   .pageHeader((report) => {
+     headerFunction(report, headers)
+   })
    .pageFooter(footerFunction)
    .detail(testDetail)
    .render();
