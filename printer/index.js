@@ -15,7 +15,7 @@ module.exports = function() {
 
   const printer = {
 
-    print: function(name, headers, data, options) {
+    print: function(name, headers, data, options, cb) {
       const rpt = new report(name, options)
        .data(data)
        .pageHeader((report) => {
@@ -23,7 +23,9 @@ module.exports = function() {
        })
        .pageFooter(this._footerFunction)
        .detail(this._dataDetail)
-       .render();
+       .render((err, reportName) => {
+         cb(err, reportName);
+       });
     },
 
     _footerFunction : function(report) {
@@ -33,7 +35,8 @@ module.exports = function() {
     },
 
     _headerFunction: function(report, headers, name) {
-      report.print(`${name} Report`, {fontSize: 22, bold: true, underline:true, align: "center"});
+      let subString = (name.length) - 4;
+      report.print(`${name.substring(0, subString)} Report`, {fontSize: 22, bold: true, underline:true, align: "center"});
       report.newLine(2);
       headers = headers.map((header) => {
         return {
