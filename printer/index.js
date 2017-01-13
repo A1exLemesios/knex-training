@@ -15,11 +15,11 @@ module.exports = function() {
 
   const printer = {
 
-    print: function(name, headers, data, options, cb) {
+    print: function(name, headers, data, options, title, cb) {
       const rpt = new report(name, options)
        .data(data)
        .pageHeader((report) => {
-         this._headerFunction(report, headers, name)
+         this._headerFunction(report, headers, title)
        })
        .pageFooter(this._footerFunction)
        .detail(this._dataDetail)
@@ -34,9 +34,8 @@ module.exports = function() {
       report.print("Printed: "+(new Date().toLocaleDateString()), {y: report.maxY()-14, align: "left"});
     },
 
-    _headerFunction: function(report, headers, name) {
-      let subString = (name.length) - 4;
-      report.print(`${name.substring(0, subString)} Report`, {fontSize: 22, bold: true, underline:true, align: "center"});
+    _headerFunction: function(report, headers, title) {
+      report.print(`${title} Report`, {fontSize: 22, bold: true, underline:true, align: "center"});
       report.newLine(2);
       headers = headers.map((header) => {
         return {
